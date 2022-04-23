@@ -39,4 +39,39 @@ class StarshipsTest extends TestCase
             ]
         ]);
     }
+
+    public function test_can_filter_starships_by_name()
+    {
+        $devastators = Starship::factory(2)->create([
+            "name" => "Devastator",
+            "status" => "Operational"
+        ]);
+
+        Starship::factory()->create([
+            "name" => "Red Five",
+            "status" => "Damaged"
+        ]);
+
+        $response = $this->getJson('/api/starships');
+
+        $response->assertExactJson([
+            'data' => [
+                [
+                    "id" => $devastators[0]->id,
+                    "name" => "Devastator",
+                    "status" => "Operational"
+                ],
+                [
+                    "id" => $devastators[1]->id,
+                    "name" => "Devastator",
+                    "status" => "Operational"
+                ]
+            ]
+        ]);
+
+        $response->assertJsonMissing([
+            'name' => 'Red Five',
+            'status' => 'Damaged'
+        ]);
+    }
 }
