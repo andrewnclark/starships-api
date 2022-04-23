@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Starship;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -52,7 +54,7 @@ class StarshipsTest extends TestCase
             "status" => "Damaged"
         ]);
 
-        $response = $this->getJson('/api/starships');
+        $response = $this->getJson('/api/starships?name=Devastator');
 
         $response->assertExactJson([
             'data' => [
