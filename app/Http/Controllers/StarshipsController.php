@@ -16,7 +16,7 @@ class StarshipsController extends Controller
         return new StarshipListCollection(Starship::filter($filters)->get());
     }
 
-    public function view(Starship $starship)
+    public function show(Starship $starship)
     {
         $starship->load('armaments');
 

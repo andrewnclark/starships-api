@@ -21,5 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/starships', [StarshipsController::class, 'index']);
-Route::get('/starships/{starship}', [StarshipsController::class, 'view']);
+// Route::get('/starships', [StarshipsController::class, 'index']);
+// Route::get('/starships/{starship}', [StarshipsController::class, 'view']);
+
+Route::resource('starships', StarshipsController::class);
