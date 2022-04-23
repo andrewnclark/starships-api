@@ -76,4 +76,29 @@ class StarshipsTest extends TestCase
             'status' => 'Damaged'
         ]);
     }
+
+    public function test_can_filter_starships_by_status()
+    {
+        Starship::factory(2)->create([
+            "name" => "Devastator",
+            "status" => "Operational"
+        ]);
+
+        $damaged = Starship::factory()->create([
+            "name" => "Red Five",
+            "status" => "Damaged"
+        ]);
+
+        $response = $this->getJson('/api/starships?status=damaged');
+
+        $response->assertExactJson([
+            'data' => [
+                [
+                    'id' => $damaged->id,
+                    'name' => 'Red Five',
+                    'status' => 'Damaged'
+                ]
+            ]
+        ]);
+    }
 }

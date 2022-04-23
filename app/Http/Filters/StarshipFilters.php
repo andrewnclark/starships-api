@@ -11,4 +11,9 @@ class StarshipFilters extends QueryFilters
     {
         return $this->builder->where('name', $name);
     }
+
+    public function status(string $status): Builder
+    {
+        return $this->builder->where('status', $status);
+    }
 }
