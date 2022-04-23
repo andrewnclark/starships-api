@@ -11,7 +11,12 @@ class StarshipResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'status' => $this->status
+            'status' => $this->status,
+            'class' => $this->class,
+            'image' => $this->image,
+            'value' => $this->value,
+            'crew' => $this->crew,
+            'armament' => ArmamentResource::collection($this->whenLoaded('armaments')),
         ];
     }
 }

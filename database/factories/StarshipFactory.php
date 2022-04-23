@@ -19,6 +19,10 @@ class StarshipFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'status' => $this->faker->randomElement(['Operational', 'Damaged']),
+            'class' => $this->faker->word(),
+            'crew' => $this->faker->numberBetween(1000, 35000),
+            'image' => $this->faker->imageUrl(),
+            'value' => $this->faker->randomFloat(2, 10000, 100000),
         ];
     }
 }

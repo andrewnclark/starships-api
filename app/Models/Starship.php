@@ -10,4 +10,9 @@ class Starship extends Model
 {
     use HasFactory;
     use Filterable;
+
+    public function armaments()
+    {
+        return $this->belongsToMany(Armament::class, 'armament_starship')->withPivot('quantity');
+    }
 }

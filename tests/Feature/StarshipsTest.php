@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Armament;
 use App\Models\Starship;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -97,6 +98,52 @@ class StarshipsTest extends TestCase
                     'id' => $damaged->id,
                     'name' => 'Red Five',
                     'status' => 'Damaged'
+                ]
+            ]
+        ]);
+    }
+
+    public function test_can_view_a_single_starship()
+    {
+        $ship = Starship::factory()->create([
+            'name' => 'Devastator',
+            'class' => 'Star Destroyer',
+            'crew' => 35000,
+            'image' => 'https://url.to.image',
+            'value' => 1999.99,
+            'status' => 'operational',
+        ]);
+
+        $laser = Armament::factory()->create(['title' => 'Turbo Laser']);
+        $cannon = Armament::factory()->create(['title' => 'Ion Cannons']);
+        $beam = Armament::factory()->create(['title' => 'Tractor Beam']);
+
+        $ship->armaments()->attach($laser->id, ['quantity' => 60]);
+        $ship->armaments()->attach($cannon->id, ['quantity' => 60]);
+        $ship->armaments()->attach($beam->id, ['quantity' => 60]);
+
+        $response = $this->getJson("/api/starships/{$ship->id}");
+
+        $response->assertExactJson([
+            'id' => $ship->id,
+            'name' => 'Devastator',
+            'class' => 'Star Destroyer',
+            'crew' => 35000,
+            'image' => 'https://url.to.image',
+            'value' => 1999.99,
+            'status' => 'operational',
+            'armament' => [
+                [
+                    "title" => "Turbo Laser",
+                    "qty" => 60,
+                ],
+                [
+                    'title' => 'Ion Cannons',
+                    'qty' => 60                    
+                ],
+                [
+                    'title' => 'Tractor Beam',
+                    'qty' => 60
                 ]
             ]
         ]);

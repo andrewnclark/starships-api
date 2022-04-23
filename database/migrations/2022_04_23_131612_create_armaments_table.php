@@ -13,15 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('starships', function (Blueprint $table) {
+        Schema::create('armaments', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
             $table->timestamps();
-            $table->string('name');
-            $table->string('status');
-            $table->string('class');
-            $table->unsignedInteger('crew');
-            $table->string('image');
-            $table->float('value');
         });
     }
 
@@ -32,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('starships');
+        Schema::dropIfExists('armaments');
     }
 };

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\StarshipsController;
+use App\Models\Starship;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::get('/starships', [StarshipsController::class, 'index']);
+Route::get('/starships/{starship}', [StarshipsController::class, 'view']);

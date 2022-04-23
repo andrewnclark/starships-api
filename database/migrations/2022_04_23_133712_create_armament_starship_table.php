@@ -13,15 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('starships', function (Blueprint $table) {
+        Schema::create('armament_starship', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('quantity');
+            $table->unsignedBigInteger('armament_id');
+            $table->unsignedBigInteger('starship_id');
             $table->timestamps();
-            $table->string('name');
-            $table->string('status');
-            $table->string('class');
-            $table->unsignedInteger('crew');
-            $table->string('image');
-            $table->float('value');
+
+            $table->foreign('armament_id')->references('id')->on('armaments');
+            $table->foreign('starship_id')->references('id')->on('starships');
         });
     }
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('starships');
+        Schema::dropIfExists('armament_starship');
     }
 };
